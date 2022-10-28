@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Global Posts </h1>
+
+{% for post in posts %}
+    <div class="card">
+            <div  class="card-content">
+                <span class="card-title">{{ post.content }}</span>
+                <p>user: {{ post.user }}</p> 
+                <p>Date: {{ post.date }}</p> 
+            </div>
+    </div>
+{% endfor %}
+<div class="card">
+    <a href="{% url 'global_post_create' %}">Create Post</a>
+</div>
+{% endblock %}
