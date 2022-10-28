@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 from .models import GlobalPost
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
@@ -10,10 +11,10 @@ from django.contrib.auth.forms import UserCreationForm
 
 # Create your views here.
 def home(request):
-    return render(request, 'home.html')
+  return render(request, 'home.html')
 
 def about(request):
-    return render(request, 'about.html')
+  return render(request, 'about.html')
 
 def signup(request):
   error_message = ''
@@ -36,14 +37,34 @@ def signup(request):
 
 @login_required
 def global_index(request):
-    posts = GlobalPost.objects.all()
-    
-    return render(request, 'global_posts/index.html', {'posts': posts})
+  posts = GlobalPost.objects.all()
+  
+  return render(request, 'global_posts/index.html', {'posts': posts})
+  
+def global_post_detail(request, post_id):
+  post = GlobalPost.objects.get(id=post_id)
+  
+  return render(request, 'global_posts/detail.html', {'post': post})
     
 class GlobalPostCreate(LoginRequiredMixin ,CreateView):
-    model = GlobalPost
-    fields = ['content']
+  model = GlobalPost
+  fields = ['content']
+  
+  def form_valid(self, form):
+      form.instance.user = self.request.user
+      return super().form_valid(form)
+      
+class GlobalPostUpdate(LoginRequiredMixin, UpdateView):
+  model = GlobalPost
+  fields = ['content']
+  
+  def form_valid(self, form):
+      self.object = form.save(commit=False)
+      self.object.save()
+      return redirect ('global_post_detail', self.object.id)
     
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super().form_valid(form)
+      
+    
+class GlobalPostDelete(LoginRequiredMixin, DeleteView):
+  model = GlobalPost
+  success_url = '/global/'
