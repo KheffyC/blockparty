@@ -1,3 +1,4 @@
+from django.urls import reverse
 from django.db import models
 # from django.urls import reverse
 
@@ -12,3 +13,10 @@ class GlobalPost(models.Model):
     
     def __str__(self):
         return f"{self.content} made by {self.user}"
+    
+    def get_absolute_url(self):
+        return reverse("global_index")
+    
+    class Meta:
+        ordering = ['-date']
+    
