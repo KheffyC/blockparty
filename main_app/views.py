@@ -78,7 +78,13 @@ def profiles_index(request):
   
   return render(request, 'profiles/index.html', {'users': users})
   
+@login_required
 def profiles_detail(request, user_id):
   user = User.objects.get(pk=user_id)
   
   return render(request, 'profiles/detail.html', {'user': user})
+
+@login_required
+def my_profile(request):
+
+  return render(request, 'my_profile.html') 
