@@ -5,6 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
 from .forms import ProfileForm
 
@@ -70,3 +71,14 @@ class GlobalPostUpdate(LoginRequiredMixin, UpdateView):
 class GlobalPostDelete(LoginRequiredMixin, DeleteView):
   model = GlobalPost
   success_url = '/global/'
+
+@login_required
+def profiles_index(request):
+  users = User.objects.all()
+  
+  return render(request, 'profiles/index.html', {'users': users})
+  
+def profiles_detail(request, user_id):
+  user = User.objects.get(pk=user_id)
+  
+  return render(request, 'profiles/detail.html', {'user': user})
