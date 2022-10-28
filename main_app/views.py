@@ -36,12 +36,7 @@ def signup(request):
   form = UserCreationForm()
   context = {'form': form, 'error_message': error_message}
   return render(request, 'registration/signup.html', context)
-
-# class ProfileCreate(CreateView):
-#   model = Profile
-#   fields = ['state']
   
-    
 @login_required
 def global_index(request):
   posts = GlobalPost.objects.all()
