@@ -8,8 +8,8 @@
         <a href="{% url 'global_post_detail' post.id %}">
             <div  class="card-content">
                 <span class="card-title">{{ post.content }}</span>
-                <p>user: {{ post.user }}</p> 
-                <p>Date: {{ post.date }}</p> 
+                <p>user: {{ post.user }} from {{ post.user.profile.state }}</p> 
+                <p>{{ post.date }}</p> 
             </div>
         </a>
     </div>

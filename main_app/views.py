@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect
-from django.urls import reverse_lazy
-from .models import GlobalPost
+from .models import GlobalPost, Profile
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
+
+from .forms import ProfileForm
+
 
 
 
@@ -35,6 +37,11 @@ def signup(request):
   context = {'form': form, 'error_message': error_message}
   return render(request, 'registration/signup.html', context)
 
+# class ProfileCreate(CreateView):
+#   model = Profile
+#   fields = ['state']
+  
+    
 @login_required
 def global_index(request):
   posts = GlobalPost.objects.all()
