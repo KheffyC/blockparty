@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Edit <span class="teal-text">Profile</span></h1>
+
+  <form action="" method="POST">
+    {% csrf_token %}
+    <table class="responsive-table, s6">
+      {{ form.as_table }}
+    </table>
+    <input type="submit" value="Submit!" class="btn">
+  </form>
+  <script>
+    const dateEl = document.getElementById('id_birth_date');
+    M.Datepicker.init(dateEl, {
+      format: 'yyyy-mm-dd',
+      autoClose: true
+  });
+   </script>
+{% endblock %}
