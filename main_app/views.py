@@ -1,3 +1,4 @@
+from distutils.log import Log
 from django.shortcuts import render, redirect
 from .models import GlobalPost, Profile
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -60,11 +61,12 @@ class GlobalPostCreate(LoginRequiredMixin ,CreateView):
 class GlobalPostUpdate(LoginRequiredMixin, UpdateView):
   model = GlobalPost
   fields = ['content']
-  
-  def form_valid(self, form):
-      self.object = form.save(commit=False)
-      self.object.save()
-      return redirect ('global_post_detail', self.object.id)
+
+  if form.instance.user == self.request.user:
+   def form_valid(self, form):
+       self.object = form.save(commit=False)
+       self.object.save()
+       return redirect ('global_post_detail', self.object.id)
     
       
     
@@ -88,3 +90,18 @@ def profiles_detail(request, user_id):
 def my_profile(request):
 
   return render(request, 'my_profile.html') 
+
+
+class ProfileUpdate(LoginRequiredMixin, UpdateView):
+  model = Profile
+  form_class = ProfileForm
+
+  def form_valid(self, form):
+      self.object = form.save(commit=False)
+      self.object.save()
+      return redirect ('my_profile')
+  
+  
+class ProfileDelete(LoginRequiredMixin, DeleteView):
+  model = User
+  success_url = ('/')

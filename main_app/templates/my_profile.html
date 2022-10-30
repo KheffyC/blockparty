@@ -4,4 +4,15 @@
 {% block content %}
   <h3>{{user.username}}</h3>
   <h3>{{user.profile.bio}}</h3>
+  <h3>{{user.profile.state}}</h3>
+{% if user.profile.birth_date == null %}
+  <h3>Obtained Immortality</h3>
+{% else %}
+  <h3>{{user.profile.birth_date}}</h3>
+{% endif %}
+  <div class="card-action">
+      <a href="{% url 'profile_update' user.id %}">Edit</a>
+      <a href="{% url 'profile_delete' user.id %}">Delete</a>
+  </div>
+
 {% endblock %}
