@@ -1,4 +1,5 @@
 from distutils.log import Log
+from xml.etree.ElementTree import Comment
 from django.shortcuts import render, redirect
 from .models import GlobalPost, Profile
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -48,7 +49,8 @@ def global_index(request):
 def global_post_detail(request, post_id):
   post = GlobalPost.objects.get(id=post_id)
   
-  return render(request, 'global_posts/detail.html', {'post': post})
+  comment_form = CommentForm()
+  return render(request, 'global_posts/detail.html', {'post': post, "comment_form": comment_form})
     
 class GlobalPostCreate(LoginRequiredMixin ,CreateView):
   model = GlobalPost
@@ -79,8 +81,9 @@ def add_comment(request, post_id):
   if form.is_valid():
     new_comment = form.save(commit=False)
     new_comment.post_id = post_id
+    new_comment.user_id = request.user.id
     new_comment.save()
-  return redirect('detail', post_id=post_id)
+  return redirect('global_post_detail', post_id=post_id)
 
 @login_required
 def profiles_index(request):
