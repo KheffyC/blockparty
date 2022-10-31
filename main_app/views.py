@@ -62,11 +62,10 @@ class GlobalPostUpdate(LoginRequiredMixin, UpdateView):
   model = GlobalPost
   fields = ['content']
 
-  # if form.instance.user == self.request.user:
-  #  def form_valid(self, form):
-  #      self.object = form.save(commit=False)
-  #      self.object.save()
-  #      return redirect ('global_post_detail', self.object.id)
+  def form_valid(self, form):
+      self.object = form.save(commit=False)
+      self.object.save()
+      return redirect ('global_post_detail', self.object.id)
     
       
     
