@@ -8,7 +8,7 @@ from django.dispatch import receiver
 # Create your models here.
 
 class Group(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, default='Global')
 
     def __str__(self):
         return f"{self.name}"
@@ -38,7 +38,7 @@ class Profile(models.Model):
         
        
 
-class GlobalPost(models.Model):
+class Post(models.Model):
     content = models.TextField(max_length=500)
     date = models.DateTimeField(auto_now_add=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -57,7 +57,7 @@ class Comment(models.Model):
     content = models.TextField(max_length=250)
     date = models.DateTimeField(auto_now_add=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    post = models.ForeignKey(GlobalPost, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
     
     def __str__(self):
         return f"{self.content} made by {self.user}"
