@@ -19,5 +19,12 @@
               <button class="btn" type="submit">Add this comment</button>
             </form>
         </div>
+        {% for comment in post.comment_set.all %}
+            <div class="card">
+                <p>{{comment.date}}</p>
+                <p>{{comment.content}}</p>
+                <p>{{comment.user}}</p>
+            </div>
+        {% endfor %}
 </div>
 {% endblock %}
