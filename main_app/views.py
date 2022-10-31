@@ -62,12 +62,13 @@ def global_post_detail(request, post_id):
 class PostCreate(LoginRequiredMixin ,CreateView):
   model = Post
   fields = ['content']
+ 
   
   def form_valid(self, form):
-      form.instance.user = self.request.user
-      form.instance.group = self.request.group.id
-      print(self.request, 'thisbosjbdovjbsolvsfb')
-      return super().form_valid(form)
+    form.instance.user = self.request.user
+    group = Group.objects.get(id=self.kwargs['group_id'])
+    form.instance.group = group
+    return super().form_valid(form)
       
 class PostUpdate(LoginRequiredMixin, UpdateView):
   model = Post

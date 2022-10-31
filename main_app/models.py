@@ -48,7 +48,7 @@ class Post(models.Model):
         return f"{self.content} made by {self.user}"
     
     def get_absolute_url(self):
-        return reverse("global_index")
+        return reverse('group', kwargs={'group_id': self.group.id})
     
     class Meta:
         ordering = ['-date']
