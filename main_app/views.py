@@ -1,7 +1,7 @@
 from distutils.log import Log
 from xml.etree.ElementTree import Comment
 from django.shortcuts import render, redirect
-from .models import GlobalPost, Profile
+from .models import Post, Profile, Group
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import login
@@ -41,27 +41,36 @@ def signup(request):
   return render(request, 'registration/signup.html', context)
   
 @login_required
-def global_index(request):
-  posts = GlobalPost.objects.all()
+def groups_index(request):
+  groups = Group.objects.all()
   
-  return render(request, 'global_posts/index.html', {'posts': posts})
+  return render(request, 'groups/index.html', {'groups': groups})
+
+def group(request, group_id):
+  group = Group.objects.get(id=group_id)
+  
+  posts = Post.objects.filter(group_id = group_id).values()
+  
+  return render(request, 'group/main.html', {'group': group, 'posts': posts})
   
 def global_post_detail(request, post_id):
-  post = GlobalPost.objects.get(id=post_id)
+  post = Post.objects.get(id=post_id)
   
   comment_form = CommentForm()
   return render(request, 'global_posts/detail.html', {'post': post, "comment_form": comment_form})
     
-class GlobalPostCreate(LoginRequiredMixin ,CreateView):
-  model = GlobalPost
+class PostCreate(LoginRequiredMixin ,CreateView):
+  model = Post
   fields = ['content']
   
   def form_valid(self, form):
       form.instance.user = self.request.user
+      form.instance.group = self.request.group.id
+      print(self.request, 'thisbosjbdovjbsolvsfb')
       return super().form_valid(form)
       
-class GlobalPostUpdate(LoginRequiredMixin, UpdateView):
-  model = GlobalPost
+class PostUpdate(LoginRequiredMixin, UpdateView):
+  model = Post
   fields = ['content']
 
   def form_valid(self, form):
@@ -71,8 +80,8 @@ class GlobalPostUpdate(LoginRequiredMixin, UpdateView):
     
       
     
-class GlobalPostDelete(LoginRequiredMixin, DeleteView):
-  model = GlobalPost
+class PostDelete(LoginRequiredMixin, DeleteView):
+  model = Post
   success_url = '/global/'
 
 @login_required

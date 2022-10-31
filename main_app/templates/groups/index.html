@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Groups </h1>
+    <div class="center">
+    </div>
+
+{% if groups.count %}
+    {% for group in groups %}
+    <a href="{% url 'group' group.id %}">
+        <div class="card hoverable">
+            <div  class="card-content">
+                <span class="card-title">{{ group.name }}</span>
+            </div>
+        </div>
+    </a>
+    {% endfor %}
+{% endif %}
+{% endblock %}
