@@ -12,5 +12,12 @@
                 <a href="{% url 'global_post_delete' post.id %}">Delete</a>
             </div>
         {% endif %}
+        <div>
+            <form action="{% url 'add_comment' post.id %}" method="POST">
+              {% csrf_token %}
+              {{ comment_form.as_table }}
+              <button class="btn" type="submit">Add this comment</button>
+            </form>
+        </div>
 </div>
 {% endblock %}
