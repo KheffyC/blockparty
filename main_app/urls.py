@@ -11,6 +11,7 @@ urlpatterns = [
     path('global/create/', views.GlobalPostCreate.as_view(), name='global_post_create'),
     path('global/<int:pk>/update/', views.GlobalPostUpdate.as_view(), name='global_post_update'), # this one 
     path('global/<int:pk>/delete/', views.GlobalPostDelete.as_view(), name='global_post_delete'),
+    path('global/<int:post_id>/add_comment/', views.add_comment, name='add_comment'),
     path('profiles/', views.profiles_index, name='profiles_index'),
     path('profiles/<int:user_id>/', views.profiles_detail, name='profiles_detail'),
     path('my_profile/', views.my_profile, name='my_profile'),

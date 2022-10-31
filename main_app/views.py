@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
-from .forms import ProfileForm
+from .forms import ProfileForm, CommentForm
 
 
 
@@ -62,17 +62,26 @@ class GlobalPostUpdate(LoginRequiredMixin, UpdateView):
   model = GlobalPost
   fields = ['content']
 
-  if form.instance.user == self.request.user:
-   def form_valid(self, form):
-       self.object = form.save(commit=False)
-       self.object.save()
-       return redirect ('global_post_detail', self.object.id)
+  # if form.instance.user == self.request.user:
+  #  def form_valid(self, form):
+  #      self.object = form.save(commit=False)
+  #      self.object.save()
+  #      return redirect ('global_post_detail', self.object.id)
     
       
     
 class GlobalPostDelete(LoginRequiredMixin, DeleteView):
   model = GlobalPost
   success_url = '/global/'
+
+@login_required
+def add_comment(request, post_id):
+  form = CommentForm(request.POST)
+  if form.is_valid():
+    new_comment = form.save(commit=False)
+    new_comment.post_id = post_id
+    new_comment.save()
+  return redirect('detail', post_id=post_id)
 
 @login_required
 def profiles_index(request):
