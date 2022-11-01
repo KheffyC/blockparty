@@ -1,15 +1,24 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Edit <span class="teal-text">Profile</span></h1>
+  {%if request.user == profile.user %}
 
-  <form action="" method="POST">
-    {% csrf_token %}
-    <table class="responsive-table, s6">
-      {{ form.as_table }}
-    </table>
-    <input type="submit" value="Submit!" class="btn">
-  </form>
+      <h1>Edit <span class="teal-text">Profile</span></h1>
+
+    <form action="" method="POST">
+      {% csrf_token %}
+      <table class="responsive-table, s6">
+        {{ form.as_table }}
+      </table>
+      <input type="submit" value="Submit!" class="btn">
+    </form>
+  {% endif %}
+  {%if request.user != profile.user %}
+      <h3>You cannot edit this profile</h3>
+      <button>please return to your lane </button>
+  {% endif %}
+
+
   <script>
     const dateEl = document.getElementById('id_birth_date');
     M.Datepicker.init(dateEl, {

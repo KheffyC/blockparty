@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
-
 {% block content %}
+
+{%if request.user == post.user %}
 
   <h4>Are you sure you want to delete <span class="teal-text">{{ post.content }}</span>?</h4>
 
@@ -9,4 +10,16 @@
     <input type="submit" value="Yes - Delete!" class="btn">
     <a href="{% url 'post_detail' object.group.id object.id %}">Cancel</a>
   </form>
+{% endif %}
+{%if request.user != post.user %}
+  <h3>You cannot delete this entry</h3>
+{% endif %}
+
 {% endblock %}
+
+
+
+
+
+
+

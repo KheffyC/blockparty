@@ -1,17 +1,32 @@
 {% extends 'base.html' %}
-
 {% block content %}
+
   {% if object %}
-    <h1>Edit <span class="teal-text">Post</span></h1>
+    {%if request.user == post.user %}
+
+      <h1>Edit <span class="teal-text">Post</span></h1>
+      <form action="" method="POST">
+        {% csrf_token %}
+        <table class="responsive-table">
+          {{ form.as_table }}
+        </table>
+        <input type="submit" value="Submit!" class="btn">
+      </form>
+      {% endif %}
+    {%if request.user != post.user %}
+      <h3>You cannot edit this entry</h3>
+      <button>please return to your lane </button>
+    {% endif %}
+
   {% else %}
-        <h1>Add Post</h1>
+    <h1>Add Post</h1>
+    <!-- Leaving the action empty makes the form post to the same url used to display it -->
+    <form action="" method="POST">
+      {% csrf_token %}
+      <table class="responsive-table">
+        {{ form.as_table }}
+      </table>
+      <input type="submit" value="Submit!" class="btn">
+    </form>  
   {% endif %}
-          <!-- Leaving the action empty makes the form post to the same url used to display it -->
-  <form action="" method="POST">
-    {% csrf_token %}
-    <table class="responsive-table">
-      {{ form.as_table }}
-    </table>
-    <input type="submit" value="Submit!" class="btn">
-  </form>
 {% endblock %}
