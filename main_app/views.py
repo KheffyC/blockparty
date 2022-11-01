@@ -121,7 +121,7 @@ class ProfileUpdate(LoginRequiredMixin, UpdateView):
   def form_valid(self, form):
       self.object = form.save(commit=False)
       self.object.save()
-      return redirect ('my_profile')
+      return redirect ('my_profile' )
   
   
 class ProfileDelete(LoginRequiredMixin, DeleteView):
