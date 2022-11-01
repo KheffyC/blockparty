@@ -3,8 +3,8 @@
 <div class="card">
         <div  class="card-content">
             <span class="card-title">{{ post.content }}</span>
-            <p>user: {{ post.user }}</p> 
-            <p>Date: {{ post.date }}</p> 
+            <p>from {{ post.user }}</p> 
+            <p>on {{ post.date }}</p> 
         </div>
         {% if user == post.user %}
             <div class="card-action">
@@ -24,9 +24,19 @@
 </div>
 {% for comment in post.comment_set.all %}
     <div class="card">
-        <h5>{{ comment.user }}</h5>
-        <div class="card-content"> {{ comment.content }}</div>
-        <div class="card-content"> {{ comment.date }}</div>
+        {% if user == comment.user %}
+        <div>
+            <div class="col s6">
+                <form action="{% url 'remove_comment' post.group.id post.id comment.id%}" method="POST">
+                  {% csrf_token %}
+                  <input type="submit" class="btn" value="X">
+                </form>
+            </div>
+        </div>
+        {% endif %}
+        <span class="card-title">{{ comment.content }}</span>
+        <p>from {{ comment.user }}</p> 
+        <p>on {{ comment.date }}</p> 
     </div>
     {% endfor %}
 {% endblock %}

@@ -1,6 +1,6 @@
 from distutils.log import Log
 from django.shortcuts import render, redirect
-from .models import Post, Profile, Group
+from .models import Post, Profile, Group, Comment
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import login
@@ -94,7 +94,14 @@ def add_comment(request, group_id,  post_id):
     new_comment.post_id = post_id
     new_comment.user_id = request.user.id
     new_comment.save()
-  return redirect('post_detail', group_id, post_id )
+  return redirect('post_detail', group_id, post_id)
+
+@login_required
+def remove_comment(request, group_id,  post_id, comment_id):
+  comment = Comment.objects.get(id=comment_id)
+  if request.user.id == comment.user.id:
+    comment.delete()
+  return redirect('post_detail', group_id, post_id)
 
 @login_required
 def profiles_index(request):
