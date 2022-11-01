@@ -13,5 +13,20 @@
             </div>
         {% endif %}
         <div>
+            <div class="col s6">
+                <form action="{% url 'add_comment' post.group.id post.id %}" method="POST">
+                  {% csrf_token %}
+                  {{ comment_form.as_p }}
+                  <input type="submit" class="btn" value="Add Comment">
+                </form>
+            </div>
+        </div>
 </div>
+{% for comment in post.comment_set.all %}
+    <div class="card">
+        <h5>{{ comment.user }}</h5>
+        <div class="card-content"> {{ comment.content }}</div>
+        <div class="card-content"> {{ comment.date }}</div>
+    </div>
+    {% endfor %}
 {% endblock %}

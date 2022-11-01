@@ -12,7 +12,7 @@ urlpatterns = [
     path('group/<int:group_id>/posts/<int:post_id>/', views.post_detail, name='post_detail'),
     path('group/<int:group_id>/posts/<int:pk>/update', views.PostUpdate.as_view(), name='post_update'),
     path('group/<int:group_id>/posts/<int:pk>/delete', views.PostDelete.as_view(), name='post_delete'),
-    
+    path('groups/<int:group_id>/posts/<int:post_id>/add_comments/', views.add_comment, name='add_comment'),
     # path('global/<int:post_id>/', views.global_post_detail, name='global_post_detail'), #this is equal to my_profile
     # path('global/create/', views.GlobalPostCreate.as_view(), name='global_post_create'),
     # path('global/<int:pk>/update/', views.GlobalPostUpdate.as_view(), name='global_post_update'), # this one 

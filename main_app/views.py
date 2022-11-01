@@ -87,14 +87,14 @@ class PostDelete(LoginRequiredMixin, DeleteView):
     return reverse_lazy( 'group', kwargs = {'group_id': self.kwargs['group_id']},)
   
 @login_required
-def add_comment(request, post_id):
+def add_comment(request, group_id,  post_id):
   form = CommentForm(request.POST)
   if form.is_valid():
     new_comment = form.save(commit=False)
     new_comment.post_id = post_id
     new_comment.user_id = request.user.id
     new_comment.save()
-  return redirect('global_post_detail', post_id=post_id)
+  return redirect('post_detail', group_id, post_id )
 
 @login_required
 def profiles_index(request):
