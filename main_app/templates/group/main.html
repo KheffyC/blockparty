@@ -3,12 +3,15 @@
 
 <h1>Group </h1>
 <div> {{ group.id }}</div>
-<div class="card">
 {% if posts.count %}
-    {% for post in posts %}
+{% for post in posts %}
+<a href="{% url 'post_detail' group.id post.id%}">
     <div class="card">
-        {{post.content}}
+        <div class="card-content">
+            {{post.content}}
+        </div>
     </div>
+</a>
     {% endfor %}
 {% endif %}
 <button class="button">
@@ -16,5 +19,4 @@
         Create Post
     </a>
 </button>
-</div>
 {% endblock %}
