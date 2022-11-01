@@ -1,5 +1,4 @@
 from distutils.log import Log
-from xml.etree.ElementTree import Comment
 from django.shortcuts import render, redirect
 from .models import Post, Profile, Group
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -8,7 +7,7 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-
+from django.urls import reverse_lazy
 from .forms import ProfileForm, CommentForm
 
 
@@ -32,7 +31,7 @@ def signup(request):
       user = form.save()
       # This is how we log a user in via code
       login(request, user)
-      return redirect('global_index')
+      return redirect('my_profile')
     else:
       error_message = 'Invalid sign up - try again'
   # A bad POST or a GET request, so render signup.html with an empty form
@@ -53,11 +52,12 @@ def group(request, group_id):
   
   return render(request, 'group/main.html', {'group': group, 'posts': posts})
   
-def global_post_detail(request, post_id):
+def post_detail(request, group_id, post_id):
   post = Post.objects.get(id=post_id)
+  group = Group.objects.get(id=group_id)
   
   comment_form = CommentForm()
-  return render(request, 'global_posts/detail.html', {'post': post, "comment_form": comment_form})
+  return render(request, 'group/post.html', {'post': post, "comment_form": comment_form})
     
 class PostCreate(LoginRequiredMixin ,CreateView):
   model = Post
@@ -77,14 +77,15 @@ class PostUpdate(LoginRequiredMixin, UpdateView):
   def form_valid(self, form):
       self.object = form.save(commit=False)
       self.object.save()
-      return redirect ('global_post_detail', self.object.id)
+      return redirect ('post_detail', self.object.group.id, self.object.id)
     
       
     
 class PostDelete(LoginRequiredMixin, DeleteView):
   model = Post
-  success_url = '/global/'
-
+  def get_success_url(self): 
+    return reverse_lazy( 'group', kwargs = {'group_id': self.kwargs['group_id']},)
+  
 @login_required
 def add_comment(request, post_id):
   form = CommentForm(request.POST)
