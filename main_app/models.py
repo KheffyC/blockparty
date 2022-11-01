@@ -46,6 +46,7 @@ class Post(models.Model):
     date = models.DateTimeField(auto_now_add=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     group = models.ForeignKey(Group, on_delete=models.CASCADE)
+    no_of_likes = models.IntegerField(default=0)
 
     def __str__(self):
         return f"{self.content} made by {self.user}"
@@ -55,6 +56,11 @@ class Post(models.Model):
     
     class Meta:
         ordering = ['-date']
+        
+        
+class LikePost(models.Model):
+    post_id = models.CharField(max_length=500)
+    username = models.CharField(max_length=100)
     
 class Comment(models.Model):
     content = models.TextField(max_length=250)

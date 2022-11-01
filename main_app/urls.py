@@ -13,6 +13,8 @@ urlpatterns = [
     path('group/<int:group_id>/posts/<int:pk>/update', views.PostUpdate.as_view(), name='post_update'),
     path('group/<int:group_id>/posts/<int:pk>/delete', views.PostDelete.as_view(), name='post_delete'),
     path('groups/<int:group_id>/posts/<int:post_id>/add_comments/', views.add_comment, name='add_comment'),
+    path('groups/<int:group_id>/posts/<int:post_id>/<int:comment_id>/remove_comment/', views.remove_comment, name='remove_comment'),
+    path('groups/<int:group_id>/posts/<int:post_id>/like_post', views.like_post, name='like_post'),
     # path('global/<int:post_id>/', views.global_post_detail, name='global_post_detail'), #this is equal to my_profile
     # path('global/create/', views.GlobalPostCreate.as_view(), name='global_post_create'),
     # path('global/<int:pk>/update/', views.GlobalPostUpdate.as_view(), name='global_post_update'), # this one 
@@ -20,7 +22,7 @@ urlpatterns = [
     # path('global/<int:post_id>/add_comment/', views.add_comment, name='add_comment'),
     path('profiles/', views.profiles_index, name='profiles_index'),
     path('profiles/<int:user_id>/', views.profiles_detail, name='profiles_detail'),
-    path('my_profile/', views.my_profile, name='my_profile'),
+    path('my_profile/<int:user_id>/', views.my_profile, name='my_profile'),
     path('my_profile/<int:pk>/update/', views.ProfileUpdate.as_view(), name='profile_update'),
     path('my_profile/<int:pk>/delete/', views.ProfileDelete.as_view(), name='profile_delete')
 ]

@@ -1,6 +1,6 @@
 from distutils.log import Log
 from django.shortcuts import render, redirect
-from .models import Post, Profile, Group
+from .models import Post, Profile, Group, LikePost, Comment
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import login
@@ -32,7 +32,7 @@ def signup(request):
       user = form.save()
       # This is how we log a user in via code
       login(request, user)
-      return redirect('my_profile')
+      return redirect('my_profile', user.id)
     else:
       error_message = 'Invalid sign up - try again'
   # A bad POST or a GET request, so render signup.html with an empty form
@@ -87,6 +87,27 @@ class PostDelete(LoginRequiredMixin, DeleteView):
   def get_success_url(self): 
     return reverse_lazy( 'group', kwargs = {'group_id': self.kwargs['group_id']},)
   
+def like_post(request, group_id, post_id):
+  username = request.user.username
+  
+  post =  Post.objects.get(id = post_id)
+  
+  like_filter = LikePost.objects.filter(post_id=post_id, username=username).first()
+  
+  if like_filter == None:
+    new_like = LikePost.objects.create(post_id=post_id, username=username)
+    new_like.save()
+    post.no_of_likes = post.no_of_likes + 1
+    post.save()
+    return redirect('post_detail', group_id, post_id)
+  else:
+    like_filter.delete()
+    post.no_of_likes = post.no_of_likes - 1
+    post.save()
+    return redirect('post_detail', group_id, post_id)
+    
+    
+  
 @login_required
 def add_comment(request, group_id,  post_id):
   form = CommentForm(request.POST)
@@ -95,7 +116,14 @@ def add_comment(request, group_id,  post_id):
     new_comment.post_id = post_id
     new_comment.user_id = request.user.id
     new_comment.save()
-  return redirect('post_detail', group_id, post_id )
+  return redirect('post_detail', group_id, post_id)
+
+@login_required
+def remove_comment(request, group_id,  post_id, comment_id):
+  comment = Comment.objects.get(id=comment_id)
+  if request.user.id == comment.user.id:
+    comment.delete()
+  return redirect('post_detail', group_id, post_id)
 
 @login_required
 def profiles_index(request):
@@ -110,9 +138,20 @@ def profiles_detail(request, user_id):
   return render(request, 'profiles/detail.html', {'user': user})
 
 @login_required
-def my_profile(request):
-
-  return render(request, 'my_profile.html') 
+def my_profile(request, user_id):
+  user_object = User.objects.get(pk=user_id)
+  user_profile = Profile.objects.get(user=request.user.id)
+  user_posts = Post.objects.filter(user=user_id)
+  
+  context = {
+    'user_object': user_object,
+    'user_posts': user_posts,
+    'user_id': user_id,
+    'user_profile': user_profile,
+    'user_posts_length': len(user_posts)
+  }
+  
+  return render(request, 'my_profile.html', context) 
 
 
 class ProfileUpdate(LoginRequiredMixin, UpdateView):
