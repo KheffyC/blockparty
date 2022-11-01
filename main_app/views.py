@@ -32,7 +32,7 @@ def signup(request):
       user = form.save()
       # This is how we log a user in via code
       login(request, user)
-      return redirect('my_profile', user.id)
+      return redirect('profile_detail', user.id)
     else:
       error_message = 'Invalid sign up - try again'
   # A bad POST or a GET request, so render signup.html with an empty form
@@ -133,9 +133,19 @@ def profiles_index(request):
   
 @login_required
 def profiles_detail(request, user_id):
-  user = User.objects.get(pk=user_id)
+  user_object = User.objects.get(pk=user_id)
+  user_profile = Profile.objects.get(user=request.user.id)
+  user_posts = Post.objects.filter(user=user_id)
   
-  return render(request, 'profiles/detail.html', {'user': user})
+  context = {
+    'user': user_object,
+    'user_posts': user_posts,
+    'user_id': user_id,
+    'user_profile': user_profile,
+    'user_posts_length': len(user_posts)
+  }
+  
+  return render(request, 'profiles/detail.html', context)
 
 @login_required
 def my_profile(request, user_id):
@@ -161,7 +171,7 @@ class ProfileUpdate(LoginRequiredMixin, UpdateView):
   def form_valid(self, form):
       self.object = form.save(commit=False)
       self.object.save()
-      return redirect ('my_profile' )
+      return redirect ('profiles_detail', self.object.id )
   
   
 class ProfileDelete(LoginRequiredMixin, DeleteView):
