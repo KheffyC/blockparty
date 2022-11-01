@@ -6,6 +6,16 @@
             <p>user: {{ post.user }}</p> 
             <p>Date: {{ post.date }}</p> 
         </div>
+        <div>
+            <a href="{% url 'like_post' post.group.id post.id %}">Like This Post/Unlike This Post</a>
+            {% if post.no_of_likes == 0 %}
+                <p>No Likes</p>
+            {% elif post.no_of_likes == 1 %}
+                <p>{{post.no_of_likes}} person liked this post</p>
+            {% else %}
+                <p>Liked by {{post.no_of_likes}} people</p>
+            {% endif %}
+        </div>
         {% if user == post.user %}
             <div class="card-action">
                 <a href="{% url 'post_update' post.group.id post.id %}">Edit</a>
