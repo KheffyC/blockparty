@@ -27,7 +27,7 @@
             <li><a href="{% url 'profiles_index' %}">View Profiles</a></li>
             <li><a href="{% url 'groups_index' %}">Groups</a></li>
             <li><a href="{% url 'logout' %}">Log Out</a></li>
-            <li><img class="circle responsive-img" src="{{user.profile.profileimg.url}}" alt=""></li>
+            <li> <a href="{% url 'profiles_detail' user.id %}"> <img class="circle responsive-img center" src="{{user.profile.profileimg.url}}" width="70px" alt=""></a></li>
           {% else %}
             <li><a href="{% url 'signup' %}">Sign Up</a></li>
             <li><a href="{% url 'login' %}">Log In</a></li>
