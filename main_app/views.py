@@ -189,14 +189,15 @@ class ProfileUpdate(LoginRequiredMixin, UpdateView):
   form_class = ProfileForm
 
   def form_valid(self, form):
-      self.object = form.save(commit=False)
-      if not Group.objects.filter(name=self.object.state):
-        new_group = Group.objects.create(name=self.object.state)
-        self.object.groups.add(new_group)
-      else:
-        self.object.groups.add(Group.objects.get(name=self.object.state))
-      self.object.save()
-      return redirect ('profiles_detail', self.object.id )
+    self.object = form.save(commit=False)
+    print(self.__dict__, 'this is state')
+    if not Group.objects.filter(name=self.object.state):
+      new_group = Group.objects.create(name=self.object.state)
+      self.object.groups.add(new_group)
+    else:
+      self.object.groups.add(Group.objects.get(name=self.object.state))
+    self.object.save()
+    return redirect ('profiles_detail', self.object.id )
   
   
 class ProfileDelete(LoginRequiredMixin, DeleteView):
