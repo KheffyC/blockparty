@@ -24,6 +24,8 @@
     M.Datepicker.init(dateEl, {
       format: 'yyyy-mm-dd',
       autoClose: true
-  });
+    });
+    const selectEl = document.getElementById('id_state');
+    M.FormSelect.init(selectEl);
    </script>
 {% endblock %}
