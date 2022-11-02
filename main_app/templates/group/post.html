@@ -2,12 +2,12 @@
 {% block content %}
 <div class="card">
         <div  class="card-content">
+            <a class="right" href="{% url 'like_post' post.group.id post.id %}"><i class="material-icons">thumb_up</i></a>
             <span class="card-title">{{ post.content }}</span>
             <p>from {{ post.user }}</p> 
             <p>on {{ post.date }}</p> 
         </div>
         <div>
-            <a href="{% url 'like_post' post.group.id post.id %}">Like This Post/Unlike This Post</a>
             {% if post.no_of_likes == 0 %}
                 <p>No Likes</p>
             {% elif post.no_of_likes == 1 %}
