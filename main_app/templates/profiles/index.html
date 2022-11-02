@@ -1,8 +1,13 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>Profiles</h1>
-
+<h2>Profiles</h2>
+<div class="card">
+    <a href="{% url 'profiles_detail' user.id %}">
+    <h3>My Profile : {{logged_in_user.username}} </h3>
+    </a>
+</div>
+<h3>List of other users</h3>
 {% for user in users %}
     <div class="card">
         <a href="{% url 'profiles_detail' user.id %}">
