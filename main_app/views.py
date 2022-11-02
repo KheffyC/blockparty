@@ -8,7 +8,6 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy
 from .forms import ProfileForm, CommentForm
-import os
 
 
 
@@ -29,6 +28,14 @@ def signup(request):
     if form.is_valid():
       # This will add the user to the database
       user = form.save()
+      # Create Global Group if it doesnt exist
+      if not Group.objects.filter(name="Global"):
+        Group.objects.create(name='Global')
+        user.profile.save()
+      else:
+        group = Group.objects.get(name="Global")
+        user.profile.groups.add(group)
+        user.profile.save()
       # This is how we log a user in via code
       login(request, user)
       return redirect('profiles_detail', user.id)
@@ -127,8 +134,9 @@ def remove_comment(request, group_id,  post_id, comment_id):
 @login_required
 def profiles_index(request):
   users = User.objects.all()
+  logged_in_user = User.objects.get(id=request.user.id)
   
-  return render(request, 'profiles/index.html', {'users': users})
+  return render(request, 'profiles/index.html', {'users': users, 'logged_in_user': logged_in_user})
   
 @login_required
 def profiles_detail(request, user_id):
@@ -146,22 +154,6 @@ def profiles_detail(request, user_id):
   
   return render(request, 'profiles/detail.html', context)
 
-@login_required
-def my_profile(request, user_id):
-  user_object = User.objects.get(pk=user_id)
-  user_profile = Profile.objects.get(user=request.user.id)
-  user_posts = Post.objects.filter(user=user_id)
-  
-  context = {
-    'user_object': user_object,
-    'user_posts': user_posts,
-    'user_id': user_id,
-    'user_profile': user_profile,
-    'user_posts_length': len(user_posts)
-  }
-  
-  return render(request, 'profiles/detail.html', context) 
-
 
 class ProfileUpdate(LoginRequiredMixin, UpdateView):
   model = Profile
@@ -169,6 +161,11 @@ class ProfileUpdate(LoginRequiredMixin, UpdateView):
 
   def form_valid(self, form):
       self.object = form.save(commit=False)
+      if not Group.objects.filter(name=self.object.state):
+        new_group = Group.objects.create(name=self.object.state)
+        self.object.groups.add(new_group)
+      else:
+        self.object.groups.add(Group.objects.get(name=self.object.state))
       self.object.save()
       return redirect ('profiles_detail', self.object.id )
   
