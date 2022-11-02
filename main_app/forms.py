@@ -3,6 +3,7 @@ from .models import Profile, Comment
 from django.contrib.auth.models import User
 
 
+
 class UserForm(ModelForm):
     class Meta:
         model = User
@@ -10,7 +11,7 @@ class UserForm(ModelForm):
 class ProfileForm(ModelForm):
     class Meta:
         model = Profile
-        fields = ('state', 'bio', 'birth_date')
+        fields = ('state', 'bio', 'birth_date', 'profileimg')
 
 class CommentForm(ModelForm):
     class Meta:

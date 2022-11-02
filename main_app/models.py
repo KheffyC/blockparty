@@ -24,7 +24,7 @@ class Profile(models.Model):
     bio = models.TextField(max_length=500, blank=True)
     state = models.CharField(max_length=2, blank=True)
     birth_date = models.DateField(null=True, blank=True)
-    profileimg = models.ImageField(upload_to='images', default='regularprofileimage.jpeg')
+    profileimg = models.ImageField(upload_to='images/', default='regularprofileimage.jpeg')
     groups = models.ManyToManyField(Group)
     
 

@@ -24,7 +24,7 @@
           <!-- changes below -->
             <li> <a href="{% url 'about' %}">About</a></li>
           {% if user.is_authenticated %}
-            <li><a href="{% url 'my_profile' user.id %}">My Profile</a></li>
+            
             <li><a href="{% url 'profiles_index' %}">Profiles</a></li>
             <li><a href="{% url 'groups_index' %}">Groups</a></li>
             <li><a href="{% url 'logout' %}">Log Out</a></li>
@@ -39,7 +39,7 @@
       <!-- changes below -->
         <li> <a href="{% url 'about' %}">About</a></li>
       {% if user.is_authenticated %}
-        <li><a href="{% url 'my_profile' user.id %}">My Profile</a></li>
+       
         <li><a href="{% url 'profiles_index' %}">Profiles</a></li>
         <li><a href="{% url 'groups_index' %}">Groups</a></li>
         <li><a href="{% url 'logout' %}">Log Out</a></li>
