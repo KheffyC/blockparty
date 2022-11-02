@@ -8,6 +8,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy
 from .forms import ProfileForm, CommentForm
+from django.http import HttpResponse
 
 
 
@@ -153,6 +154,24 @@ def profiles_detail(request, user_id):
   }
   
   return render(request, 'profiles/detail.html', context)
+
+
+@login_required
+def profile_image_view(request):
+  
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES)
+  
+        if form.is_valid():
+            form.save()
+            return redirect('success')
+    else:
+        form = ProfileForm()
+    return render(request, 'profiles.html', {'form' : form})
+  
+  
+def success(request):
+  return HttpResponse('successfully uploaded')
 
 
 class ProfileUpdate(LoginRequiredMixin, UpdateView):
