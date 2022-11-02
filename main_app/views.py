@@ -17,8 +17,10 @@ from django.http import HttpResponse
 def home(request):
   return render(request, 'home.html')
 
+
 def about(request):
   return render(request, 'about.html')
+
 
 def signup(request):
   error_message = ''
@@ -47,18 +49,22 @@ def signup(request):
   context = {'form': form, 'error_message': error_message}
   return render(request, 'registration/signup.html', context)
   
+  
 @login_required
 def groups_index(request):
-  groups = Group.objects.all()
+  user = User.objects.get(id=request.user.id)
+  groups = user.profile.groups.all()
   
   return render(request, 'groups/index.html', {'groups': groups})
+
 
 def group(request, group_id):
   group = Group.objects.get(id=group_id)
   
-  posts = Post.objects.filter(group_id = group_id).values()
+  posts = Post.objects.filter(group_id = group_id)
   
   return render(request, 'group/main.html', {'group': group, 'posts': posts})
+ 
   
 def post_detail(request, group_id, post_id):
   post = Post.objects.get(id=post_id)
@@ -66,6 +72,7 @@ def post_detail(request, group_id, post_id):
   
   comment_form = CommentForm()
   return render(request, 'group/post.html', {'post': post, "comment_form": comment_form})
+  
     
 class PostCreate(LoginRequiredMixin ,CreateView):
   model = Post
@@ -77,6 +84,7 @@ class PostCreate(LoginRequiredMixin ,CreateView):
     group = Group.objects.get(id=self.kwargs['group_id'])
     form.instance.group = group
     return super().form_valid(form)
+ 
       
 class PostUpdate(LoginRequiredMixin, UpdateView):
   model = Post
@@ -87,12 +95,12 @@ class PostUpdate(LoginRequiredMixin, UpdateView):
       self.object.save()
       return redirect ('post_detail', self.object.group.id, self.object.id)
     
-      
-    
+       
 class PostDelete(LoginRequiredMixin, DeleteView):
   model = Post
   def get_success_url(self): 
     return reverse_lazy( 'group', kwargs = {'group_id': self.kwargs['group_id']},)
+ 
   
 def like_post(request, group_id, post_id):
   username = request.user.username
@@ -113,8 +121,7 @@ def like_post(request, group_id, post_id):
     post.save()
     return redirect('post_detail', group_id, post_id)
     
-    
-  
+     
 @login_required
 def add_comment(request, group_id,  post_id):
   form = CommentForm(request.POST)
@@ -125,6 +132,7 @@ def add_comment(request, group_id,  post_id):
     new_comment.save()
   return redirect('post_detail', group_id, post_id)
 
+
 @login_required
 def remove_comment(request, group_id,  post_id, comment_id):
   comment = Comment.objects.get(id=comment_id)
@@ -132,12 +140,14 @@ def remove_comment(request, group_id,  post_id, comment_id):
     comment.delete()
   return redirect('post_detail', group_id, post_id)
 
+
 @login_required
 def profiles_index(request):
   users = User.objects.all()
   logged_in_user = User.objects.get(id=request.user.id)
   
   return render(request, 'profiles/index.html', {'users': users, 'logged_in_user': logged_in_user})
+  
   
 @login_required
 def profiles_detail(request, user_id):

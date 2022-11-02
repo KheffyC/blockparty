@@ -8,7 +8,10 @@
 <a href="{% url 'post_detail' group.id post.id%}">
     <div class="card">
         <div class="card-content">
-            {{post.content}}
+            <div>
+                @{{ post.user }}
+            </div>
+            {{ post.content }}
         </div>
     </div>
 </a>
