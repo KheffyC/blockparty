@@ -181,9 +181,13 @@ class ProfileUpdate(LoginRequiredMixin, UpdateView):
   def form_valid(self, form):
       self.object = form.save(commit=False)
       if not Group.objects.filter(name=self.object.state):
+        self.object.groups.clear()
+        self.object.groups.add(Group.objects.get(name='Global'))
         new_group = Group.objects.create(name=self.object.state)
         self.object.groups.add(new_group)
       else:
+        self.object.groups.clear()
+        self.objects.groups.add(Group.objects.get(name='Global'))
         self.object.groups.add(Group.objects.get(name=self.object.state))
       self.object.save()
       return redirect ('profiles_detail', self.object.id )
