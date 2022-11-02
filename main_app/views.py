@@ -197,7 +197,7 @@ class ProfileUpdate(LoginRequiredMixin, UpdateView):
         self.object.groups.add(new_group)
       else:
         self.object.groups.clear()
-        self.objects.groups.add(Group.objects.get(name='Global'))
+        self.object.groups.add(Group.objects.get(name='Global'))
         self.object.groups.add(Group.objects.get(name=self.object.state))
       self.object.save()
       return redirect ('profiles_detail', self.object.id )
