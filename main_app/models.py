@@ -80,7 +80,6 @@ class Profile(models.Model):
     state = models.CharField(
         max_length=2,
         choices=STATES,
-        default=STATES[0][0],
         blank=True,
         )
     birth_date = models.DateField(null=True, blank=True)

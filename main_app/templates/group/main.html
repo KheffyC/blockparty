@@ -1,8 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>Group </h1>
-<div> {{ group.id }}</div>
+<h1>{{ group.name }} </h1>
 {% if posts.count %}
 {% for post in posts %}
 <a href="{% url 'post_detail' group.id post.id%}">
