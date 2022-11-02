@@ -161,7 +161,7 @@ def my_profile(request, user_id):
     'user_posts_length': len(user_posts)
   }
   
-  return render(request, 'my_profile.html', context) 
+  return render(request, 'profiles/detail.html', context) 
 
 @login_required
 def profile_image_view(request):
