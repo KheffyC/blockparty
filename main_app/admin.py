@@ -3,7 +3,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
 
 
-from .models import Post, Profile, Comment, Group
+from .models import Post, Profile, Comment, Group, LikePost
 
 # Register your models here.
 class ProfileInline(admin.StackedInline):
@@ -20,3 +20,4 @@ admin.site.register(Post)
 admin.site.register(Profile)
 admin.site.register(Comment)
 admin.site.register(Group)
+admin.site.register(LikePost)

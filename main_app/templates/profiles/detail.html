@@ -1,18 +1,28 @@
 {% extends 'base.html' %}
 {% block content %}
+
 <h1>Profile</h1>
-<div class="card">
-        <div  class="card-content">
-            <span class="card-title">{{ user.username }}</span>
-            {% if user.profile.bio %}
-            <p>Bio: {{ user.profile.bio }}</p> 
-            {% endif %}
-            {% if user.profile.state %}
-            <p>State: {{ user.profile.state }}</p> 
-            {% endif %}
-            {% if user.profile.birth_date %}
-            <p>Birthday {{ user.profile.birth_date }}</p> 
-            {% endif %}
-        </div>
-</div>
+<img src="{{ user.profile.profileimg.url }}" width="200px">
+<h3>{{user.profile.user}}</h3>
+  <h3>{{user.profile.bio}}</h3>
+  <h3>{{user.profile.state}}</h3>
+{% if user.profile.birth_date == null %}
+  <h5>No Birthday Listed</h5>
+{% else %}
+  <h3>{{user.profile.birth_date}}</h3>
+{% endif %}
+{% if request.user == user.profile.user %}
+  <div class="card-action">
+      <a href="{% url 'profile_update' user.id %}">Edit</a>
+      <a href="{% url 'profile_delete' user.id %}">Delete</a>
+  </div>
+{% endif %}
+  <div>
+    {% if user_posts.count %}
+      {% for posts in user_posts %}
+        <div>{{posts.content}}</div>
+      {% endfor %}
+    {% endif %}
+  </div>
+
 {% endblock %}

@@ -1,6 +1,5 @@
-from distutils.log import Log
 from django.shortcuts import render, redirect
-from .models import Post, Profile, Group, Comment
+from .models import Post, Profile, Group, LikePost, Comment
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import login
@@ -9,6 +8,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy
 from .forms import ProfileForm, CommentForm
+from django.http import HttpResponse
 
 
 
@@ -29,9 +29,17 @@ def signup(request):
     if form.is_valid():
       # This will add the user to the database
       user = form.save()
+      # Create Global Group if it doesnt exist
+      if not Group.objects.filter(name="Global"):
+        Group.objects.create(name='Global')
+        user.profile.save()
+      else:
+        group = Group.objects.get(name="Global")
+        user.profile.groups.add(group)
+        user.profile.save()
       # This is how we log a user in via code
       login(request, user)
-      return redirect('my_profile')
+      return redirect('profiles_detail', user.id)
     else:
       error_message = 'Invalid sign up - try again'
   # A bad POST or a GET request, so render signup.html with an empty form
@@ -86,6 +94,27 @@ class PostDelete(LoginRequiredMixin, DeleteView):
   def get_success_url(self): 
     return reverse_lazy( 'group', kwargs = {'group_id': self.kwargs['group_id']},)
   
+def like_post(request, group_id, post_id):
+  username = request.user.username
+  
+  post =  Post.objects.get(id = post_id)
+  
+  like_filter = LikePost.objects.filter(post_id=post_id, username=username).first()
+  
+  if like_filter == None:
+    new_like = LikePost.objects.create(post_id=post_id, username=username)
+    new_like.save()
+    post.no_of_likes = post.no_of_likes + 1
+    post.save()
+    return redirect('post_detail', group_id, post_id)
+  else:
+    like_filter.delete()
+    post.no_of_likes = post.no_of_likes - 1
+    post.save()
+    return redirect('post_detail', group_id, post_id)
+    
+    
+  
 @login_required
 def add_comment(request, group_id,  post_id):
   form = CommentForm(request.POST)
@@ -106,19 +135,43 @@ def remove_comment(request, group_id,  post_id, comment_id):
 @login_required
 def profiles_index(request):
   users = User.objects.all()
+  logged_in_user = User.objects.get(id=request.user.id)
   
-  return render(request, 'profiles/index.html', {'users': users})
+  return render(request, 'profiles/index.html', {'users': users, 'logged_in_user': logged_in_user})
   
 @login_required
 def profiles_detail(request, user_id):
-  user = User.objects.get(pk=user_id)
+  user_object = User.objects.get(pk=user_id)
+  user_profile = Profile.objects.get(user=request.user.id)
+  user_posts = Post.objects.filter(user=user_id)
   
-  return render(request, 'profiles/detail.html', {'user': user})
+  context = {
+    'user': user_object,
+    'user_posts': user_posts,
+    'user_id': user_id,
+    'user_profile': user_profile,
+    'user_posts_length': len(user_posts)
+  }
+  
+  return render(request, 'profiles/detail.html', context)
+
 
 @login_required
-def my_profile(request):
-
-  return render(request, 'my_profile.html') 
+def profile_image_view(request):
+  
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES)
+  
+        if form.is_valid():
+            form.save()
+            return redirect('success')
+    else:
+        form = ProfileForm()
+    return render(request, 'profiles.html', {'form' : form})
+  
+  
+def success(request):
+  return HttpResponse('successfully uploaded')
 
 
 class ProfileUpdate(LoginRequiredMixin, UpdateView):
@@ -127,8 +180,13 @@ class ProfileUpdate(LoginRequiredMixin, UpdateView):
 
   def form_valid(self, form):
       self.object = form.save(commit=False)
+      if not Group.objects.filter(name=self.object.state):
+        new_group = Group.objects.create(name=self.object.state)
+        self.object.groups.add(new_group)
+      else:
+        self.object.groups.add(Group.objects.get(name=self.object.state))
       self.object.save()
-      return redirect ('my_profile' )
+      return redirect ('profiles_detail', self.object.id )
   
   
 class ProfileDelete(LoginRequiredMixin, DeleteView):

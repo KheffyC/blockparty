@@ -24,10 +24,10 @@
           <!-- changes below -->
             <li> <a href="{% url 'about' %}">About</a></li>
           {% if user.is_authenticated %}
-            <li><a href="{% url 'my_profile' %}">My Profile</a></li>
-            <li><a href="{% url 'profiles_index' %}">Profiles</a></li>
+            <li><a href="{% url 'profiles_index' %}">View Profiles</a></li>
             <li><a href="{% url 'groups_index' %}">Groups</a></li>
             <li><a href="{% url 'logout' %}">Log Out</a></li>
+            <li><img class="circle responsive-img" src="{{user.profile.profileimg.url}}" alt=""></li>
           {% else %}
             <li><a href="{% url 'signup' %}">Sign Up</a></li>
             <li><a href="{% url 'login' %}">Log In</a></li>
@@ -39,10 +39,10 @@
       <!-- changes below -->
         <li> <a href="{% url 'about' %}">About</a></li>
       {% if user.is_authenticated %}
-        <li><a href="{% url 'my_profile' %}">My Profile</a></li>
-        <li><a href="{% url 'profiles_index' %}">Profiles</a></li>
+        <li><a href="{% url 'profiles_index' %}">View Profiles</a></li>
         <li><a href="{% url 'groups_index' %}">Groups</a></li>
         <li><a href="{% url 'logout' %}">Log Out</a></li>
+        <li><img class="circle responsive-img" src="{{user.profile.profileimg.url}}" alt=""></li>
       {% else %}
         <li><a href="{% url 'signup' %}">Sign Up</a></li>
         <li><a href="{% url 'login' %}">Log In</a></li>

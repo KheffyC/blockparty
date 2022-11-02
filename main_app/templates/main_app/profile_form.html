@@ -4,11 +4,11 @@
   {%if request.user == profile.user %}
 
       <h1>Edit <span class="teal-text">Profile</span></h1>
-
-    <form action="" method="POST">
+      <img src="{{ user.profile.profileimg.url }}" width="200px" />
+    <form action="" method="POST" enctype="multipart/form-data">
       {% csrf_token %}
       <table class="responsive-table, s6">
-        {{ form.as_table }}
+        {{ form.as_p }}
       </table>
       <input type="submit" value="Submit!" class="btn">
     </form>
