@@ -3,12 +3,12 @@
 
 {%if request.user == post.user %}
 
-  <h4>Are you sure you want to delete <span class="teal-text">{{ post.content }}</span>?</h4>
+  <h4>Are you sure you want to delete <br> <span class="teal-text">{{ post.content }}</span>?</h4>
 
   <form action="" method="POST">
     {% csrf_token %}
-    <input type="submit" value="Yes - Delete!" class="btn">
-    <a href="{% url 'post_detail' object.group.id object.id %}">Cancel</a>
+    <input type="submit" value="Yes - Delete!" class="white black-text btn">
+    <a href="{% url 'post_detail' object.group.id object.id %}">Go Back To Post</a>
   </form>
 {% endif %}
 {%if request.user != post.user %}
@@ -16,10 +16,3 @@
 {% endif %}
 
 {% endblock %}
-
-
-
-
-
-
-

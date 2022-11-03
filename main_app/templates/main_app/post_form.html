@@ -15,7 +15,6 @@
       {% endif %}
     {%if request.user != post.user %}
       <h3>You cannot edit this entry</h3>
-      <button>please return to your lane </button>
     {% endif %}
 
   {% else %}
@@ -26,7 +25,7 @@
       <table class="responsive-table">
         {{ form.as_table }}
       </table>
-      <input type="submit" value="Submit!" class="btn">
+      <input type="submit" value="Submit!" class="borderButton black orange-text darken-2 btn">
     </form>  
   {% endif %}
 {% endblock %}

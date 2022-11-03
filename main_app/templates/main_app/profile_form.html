@@ -20,54 +20,15 @@
         <table class="responsive-table">
           {{ form.as_p }}
         </table>
-        <input type="submit" value="Submit!" class="btn">
+        <input type="submit" value="Submit!" class="white black-text btn">
       </form>
     </div>
   </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
   {% endif %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   {%if request.user != profile.user %}
       <h3>You cannot edit this profile</h3>
       <button>please return to your lane </button>
   {% endif %}
-
-
-
-
-
-
-
-
-
-
   <script>
     const dateEl = document.getElementById('id_birth_date');
     M.Datepicker.init(dateEl, {

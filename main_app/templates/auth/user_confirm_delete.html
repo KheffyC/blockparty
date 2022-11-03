@@ -2,11 +2,10 @@
 
 {% block content %}
 
-  <h4>Are you sure you want to delete <span class="teal-text">{{ user.username }}</span>?</h4>
+  <h4>Are you sure you want to delete <span class="orange-text darken2">{{ user.username }}</span>?</h4>
 
   <form action="" method="POST">
     {% csrf_token %}
-    <input type="submit" value="Yes - Delete!" class="btn">
-    <a href="'{% url 'logout'%}">Cancel</a>
+    <input type="submit" value="Yes - Delete!" class="borderButton black orange-text darken2 btn">
   </form>
 {% endblock %}
