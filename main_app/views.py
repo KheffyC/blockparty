@@ -143,7 +143,7 @@ def remove_comment(request, group_id,  post_id, comment_id):
 
 @login_required
 def profiles_index(request):
-  users = User.objects.all()
+  users = User.objects.exclude(id=request.user.id)
   logged_in_user = User.objects.get(id=request.user.id)
   
   return render(request, 'profiles/index.html', {'users': users, 'logged_in_user': logged_in_user})

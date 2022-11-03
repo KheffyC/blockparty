@@ -2,26 +2,43 @@
 {% block content %}
 
 
- <div class="">
-     <a href="{% url 'profiles_detail' user.id %}">
-     <h3 class="profilehead">My Profile Name: &nbsp; {{logged_in_user.username}}</h3>
-     </a>
- </div>
+ <div class="row">
+    <div class="col s3">
+        <div class="row">
+            <div class="card">
+            <div class="card-image">
+                <img src="{{ user.profile.profileimg.url }}">
+            </div>
+            <div class="card-content">
+                <span class="card-title ">@{{logged_in_user.username}}</span>
+                <p>Block I live in: <strong>{{logged_in_user.profile.state}}</strong></p>
+            </div>
+            <div class="card-action">
+                <a href="{% url 'profiles_detail' user.id %}">Check out my Street Cred</a>
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="col s9">
+        {% for user in users %}
+            <h2 class="header">Other Folks</h2>
+            <div class="card horizontal ">
+                <div class="card-stacked">
+                    <div class="card-content">
+                    <img class="card-image" src="{{ user.profile.profileimg.url }}">
+                    <p>@{{user.username}}</p>
+                    <p>{{ user.profile.state }}</p>
+                </div>
+                <div class="card-action">
+                  <a href="{% url 'profiles_detail' user.id %}">View My Profile</a>
+                </div>
+              </div>
+            </div>
+        {% endfor %}
+    </div>
 
-
- <h3 id="list">Other Folks:</h3>
- {% for user in users %}
-     <div class="profile-cont">
-         <a href="{% url 'profiles_detail' user.id %}">
-             <div  class="cardi">
-                 <span class="card-title">@{{ user.username }} <img src="{{ user.profile.profileimg.url }}" width="50px"></span>
-                 {% if user.profile.state %}
-                 <p class="state1">State: {{ user.profile.state }}</p>  
-                 {% endif %}
-             </div>
-         </a>
- {% endfor %}
-     </div>
+</div>
+              
 
 
 {% endblock %}

@@ -12,6 +12,8 @@
     </div>
   
     <div class="col s9">
+      <h5>Blockname</h5>
+        <p>@{{user.profile.user}}</p>
     </div>
   
   </div>
@@ -19,7 +21,6 @@
   <div class="row">
     
     <div class="col s4">
-      <!-- Grey navigation panel -->
       <div class="section">
         {% if user.profile.bio == "" %}
         <p></p>
@@ -31,17 +32,6 @@
     </div>
 
     <div class="col s8">
-      <!-- Teal page content  -->
-      <div class="section">
-        <h5>Blockname</h5>
-        <p>@{{user.profile.user}}</p>
-        <div class="divider"></div>
-      </div>
-      <!-- <div class="section">
-        <h5>Bio</h5>
-        <p>{{user.profile.bio}}</p>
-      </div>
-      <div class="divider"></div> -->
       <div class="section">
         <h5>Birthday</h5>
         {% if user.profile.birth_date == null %}
@@ -65,10 +55,10 @@
   {% if request.user == user.profile.user %}
   <div class="row">
     <div class="col s6">
-      <a class="waves-effect waves-light btn-large" href="{% url 'profile_update' user.id %}">Update Street Cred</a>
+      <a class="black waves-effect waves-light btn-large pulse" href="{% url 'profile_update' user.id %}">Update Street Cred</a>
     </div>
     <div class="col s6">
-      <a class="waves-effect waves-light btn-large" href="{% url 'profile_delete' user.id %}">Leave the Block</a>
+      <a class="black waves-effect waves-light btn-large" href="{% url 'profile_delete' user.id %}">Leave the Block</a>
     </div>
   </div>
   {% endif %}
