@@ -2,20 +2,23 @@
 {% block content %}
 <div class="card">
         <div  class="card-content">
-            <a class="right" href="{% url 'like_post' post.group.id post.id %}"><i class="material-icons">thumb_up</i></a>
-            <span class="card-title">{{ post.content }}</span>
+            <a class="likes-container right" href="{% url 'like_post' post.group.id post.id %}">
+                <i class="material-icons">thumb_up</i>
+                <div>
+                    {% if post.no_of_likes == 0 %}
+                        <p>No Likes</p>
+                    {% elif post.no_of_likes == 1 %}
+                        <p>{{post.no_of_likes}} person liked this post</p>
+                    {% else %}
+                        <p>Liked by {{post.no_of_likes}} people</p>
+                    {% endif %}
+                </div>
+            </a>
+            <span class="post-content card-title">{{ post.content }}</span>
             <p>from {{ post.user }}</p> 
             <p>on {{ post.date }}</p> 
         </div>
-        <div>
-            {% if post.no_of_likes == 0 %}
-                <p>No Likes</p>
-            {% elif post.no_of_likes == 1 %}
-                <p>{{post.no_of_likes}} person liked this post</p>
-            {% else %}
-                <p>Liked by {{post.no_of_likes}} people</p>
-            {% endif %}
-        </div>
+
         {% if user == post.user %}
             <div class="card-action">
                 <a href="{% url 'post_update' post.group.id post.id %}">Edit</a>
@@ -34,17 +37,19 @@
 </div>
 {% for comment in post.comment_set.all %}
     <div class="card">
-        {% if user == comment.user %}
-        <div>
-            <div class="col s6">
-                <form action="{% url 'remove_comment' post.group.id post.id comment.id%}" method="POST">
-                  {% csrf_token %}
-                  <input type="submit" class="btn" value="X">
-                </form>
+        <div class="comment-container">
+            <span class="comment-content card-title">{{ comment.content }}</span>
+            {% if user == comment.user %}
+            <div>
+                <div class="col s6">
+                    <form action="{% url 'remove_comment' post.group.id post.id comment.id%}" method="POST">
+                      {% csrf_token %}
+                      <input type="submit" class="btn" value="X">
+                    </form>
+                </div>
             </div>
+            {% endif %}
         </div>
-        {% endif %}
-        <span class="card-title">{{ comment.content }}</span>
         <p>from {{ comment.user }}</p> 
         <p>on {{ comment.date }}</p> 
     </div>
