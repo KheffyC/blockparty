@@ -70,8 +70,6 @@ class Group(models.Model):
     def __str__(self):
         return f"{self.name}"
 
-# class SubGroup(Group):
-#     pass
 
 
 class Profile(models.Model):
@@ -85,9 +83,6 @@ class Profile(models.Model):
     birth_date = models.DateField(null=True, blank=True)
     profileimg = models.ImageField(upload_to='images/', default='regularprofileimage.jpeg')
     groups = models.ManyToManyField(Group)
-    
-
-    # add pfp later
     
     @receiver(post_save, sender=User)
     def create_user_profile(sender, instance, created, **kwargs):
