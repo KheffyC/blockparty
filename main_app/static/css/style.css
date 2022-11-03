@@ -46,6 +46,11 @@ body {
   margin: -10px;
 }
 
+#big-title {
+  margin: 0 auto;
+  padding: 0
+}
+
 .blocks-title {
   text-align: center;
   color: white;
