@@ -1,22 +1,27 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<div class="card">
-    <a href="{% url 'profiles_detail' user.id %}">
-    <h3>My Profile: &nbsp; {{logged_in_user.username}} </h3>
-    </a>
-</div>
-<h3>List of other users</h3>
-{% for user in users %}
-    <div class="card">
-        <a href="{% url 'profiles_detail' user.id %}">
-            <div  class="card-content">
-                <span class="card-title">@{{ user.username }}</span>
-                {% if user.profile.state %}
-                <p>State: {{ user.profile.state }}</p>  
-                {% endif %}
-            </div>
-        </a>
-    </div>
-{% endfor %}
+
+ <div class="">
+     <a href="{% url 'profiles_detail' user.id %}">
+     <h3 class="profilehead">My Profile Name: &nbsp; {{logged_in_user.username}}</h3>
+     </a>
+ </div>
+
+
+ <h3 id="list">Other Folks:</h3>
+ {% for user in users %}
+     <div class="profile-cont">
+         <a href="{% url 'profiles_detail' user.id %}">
+             <div  class="cardi">
+                 <span class="card-title">@{{ user.username }} <img src="{{ user.profile.profileimg.url }}" width="50px"></span>
+                 {% if user.profile.state %}
+                 <p class="state1">State: {{ user.profile.state }}</p>  
+                 {% endif %}
+             </div>
+         </a>
+ {% endfor %}
+     </div>
+
+
 {% endblock %}
