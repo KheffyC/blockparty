@@ -25,7 +25,7 @@
             <li> <a href="{% url 'about' %}">About</a></li>
           {% if user.is_authenticated %}
             <li><a href="{% url 'profiles_index' %}">View Profiles</a></li>
-            <li><a href="{% url 'groups_index' %}">Groups</a></li>
+            <li><a href="{% url 'groups_index' %}">View Blocks</a></li>
             <li><a href="{% url 'logout' %}">Log Out</a></li>
             {% if request.user == user.profile.user %}
               <li>

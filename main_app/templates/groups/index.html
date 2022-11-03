@@ -1,66 +1,21 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>Groups </h1>
+<h1 class="blocks-title">Your Blocks</h1>
     <div class="center">
     </div>
 
 {% if groups.count %}
     {% for group in groups %}
     <a href="{% url 'group' group.id %}">
-        <div class="card hoverable">
-            <div  class="card-content">
+        <div class="blocks-in">
+            <div  class="block-content">
                 <span class="card-title">{{ group.name }}</span>
             </div>
         </div>
     </a>
     {% endfor %}
 {% endif %}
-<!-- <div class="col-6 col-sm-4 mb-5 blog-column">
-    <div class="popular-img-section">
-    <a href="https://www.firesticktricks.com/amazon-fire-stick-apps.html" data-wpel-link="internal" data-wct-parsed="1">
-    <img width="600" height="530" src="https://www.firesticktricks.com/wp-content/uploads/2021/06/best-apps-for-firestick.jpg" alt="popular1">
-    </a>
-    </div>
-    <div class="popular-text-section mt-3">
-    <div class="popular-div pull-left">
-    <img src="https://www.firesticktricks.com//wp-content/uploads/2021/04/calender.png" alt="calender" width="18px" height="18px">
-    <span class="m-0"><time class="entry-time">November 1, 2022</time></span>
-    </div>
-    <div class="popular-div pull-right">
-    <img src="https://www.firesticktricks.com//wp-content/uploads/2021/04/user.png" alt="calender" width="18px" height="18px">
-    <span class="m-0 pink"><a href="https://www.firesticktricks.com/author/firestick" data-wpel-link="internal" data-wct-parsed="1">Patrick</a></span>
-    </div>
-    <div class="popular-col-head float-left w-100">
-    <label class="m-0 pt-3 pb-3"><a href="https://www.firesticktricks.com/amazon-fire-stick-apps.html" class="post-title" data-wpel-link="internal" data-wct-parsed="1">100+ Best FireStick Apps (Nov 2022)- Free Movies, Shows, Live TV, Sports</a></label>
-    <p class="m-0 float-left w-100">In this post, you will find the list of the best FireStick apps for movies, TV shows, live TV, sports, utility, and more. &nbsp; The…</p>
-     <button class="subscribe mt-4"><a href="https://www.firesticktricks.com/amazon-fire-stick-apps.html" class="text-uppercase text-white" data-wpel-link="internal" data-wct-parsed="1">Read More</a></button>
-    </div>
-    </div>
-    </div> -->
+
+
 {% endblock %}
-
-
-
-<div class="col-6 col-sm-4 mb-5 blog-column">
-<div class="popular-img-section">
-<a href="https://www.firesticktricks.com/amazon-fire-stick-apps.html" data-wpel-link="internal" data-wct-parsed="1">
-<img width="600" height="530" src="https://www.firesticktricks.com/wp-content/uploads/2021/06/best-apps-for-firestick.jpg" alt="popular1">
-</a>
-</div>
-<div class="popular-text-section mt-3">
-<div class="popular-div pull-left">
-<img src="https://www.firesticktricks.com//wp-content/uploads/2021/04/calender.png" alt="calender" width="18px" height="18px">
-<span class="m-0"><time class="entry-time">November 1, 2022</time></span>
-</div>
-<div class="popular-div pull-right">
-<img src="https://www.firesticktricks.com//wp-content/uploads/2021/04/user.png" alt="calender" width="18px" height="18px">
-<span class="m-0 pink"><a href="https://www.firesticktricks.com/author/firestick" data-wpel-link="internal" data-wct-parsed="1">Patrick</a></span>
-</div>
-<div class="popular-col-head float-left w-100">
-<label class="m-0 pt-3 pb-3"><a href="https://www.firesticktricks.com/amazon-fire-stick-apps.html" class="post-title" data-wpel-link="internal" data-wct-parsed="1">100+ Best FireStick Apps (Nov 2022)- Free Movies, Shows, Live TV, Sports</a></label>
-<p class="m-0 float-left w-100">In this post, you will find the list of the best FireStick apps for movies, TV shows, live TV, sports, utility, and more. &nbsp; The…</p>
- <button class="subscribe mt-4"><a href="https://www.firesticktricks.com/amazon-fire-stick-apps.html" class="text-uppercase text-white" data-wpel-link="internal" data-wct-parsed="1">Read More</a></button>
-</div>
-</div>
-</div> -->
