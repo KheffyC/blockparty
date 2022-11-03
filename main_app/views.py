@@ -57,7 +57,7 @@ def groups_index(request):
   
   return render(request, 'groups/index.html', {'groups': groups})
 
-
+@login_required
 def group(request, group_id):
   group = Group.objects.get(id=group_id)
   
@@ -65,7 +65,7 @@ def group(request, group_id):
   
   return render(request, 'group/main.html', {'group': group, 'posts': posts})
  
-  
+@login_required  
 def post_detail(request, group_id, post_id):
   post = Post.objects.get(id=post_id)
   group = Group.objects.get(id=group_id)
@@ -101,7 +101,7 @@ class PostDelete(LoginRequiredMixin, DeleteView):
   def get_success_url(self): 
     return reverse_lazy( 'group', kwargs = {'group_id': self.kwargs['group_id']},)
  
-  
+@login_required
 def like_post(request, group_id, post_id):
   username = request.user.username
   
@@ -179,7 +179,7 @@ def profile_image_view(request):
         form = ProfileForm()
     return render(request, 'profiles.html', {'form' : form})
   
-  
+@login_required 
 def success(request):
   return HttpResponse('successfully uploaded')
 

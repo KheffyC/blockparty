@@ -5,50 +5,40 @@
     <div class="col s12"></div>
   </div>
   <div class="row">
-  
     <div class="col s3">
       <img class="circle responsive-img" src="{{ user.profile.profileimg.url }}" width="180px">
-
     </div>
-  
     <div class="col s9 blockname">
       <h5>Blockname</h5>
         <p class="orange-text darken-2">@{{user.profile.user}}</p>
     </div>
-  
   </div>
   <hr class="grey darken-4">
   <div class="row">
-    
     <div class="col s4">
       <div class="section">
-        {% if user.profile.bio == "" %}
-        <p></p>
-        {% else %}
-        <h5>About me</h5>
-        <p class="orange-text darken-3">{{user.profile.bio}}</p>
+        {% if user.profile.bio %}
+          <h5>About me</h5>
+          <p class="orange-text darken-3">{{user.profile.bio}}</p>
         {% endif %}
       </div>
     </div>
-
     <div class="col s8">
       <div class="section">
         <h5>Birthday</h5>
         {% if user.profile.birth_date == null %}
-        <p class="orange-text darken-3">No Birthday Listed</p>
+          <p class="orange-text darken-3">No Birthday Listed</p>
         {% else %}
-        <p class="orange-text darken-3">{{user.profile.birth_date}}</p>
-        <div class="divider"></div>
+          <p class="orange-text darken-3">{{user.profile.birth_date}}</p>
+          <div class="divider"></div>
         {% endif %}
       </div>
       <div class="section">
-      {% if user.profile.state == "" %}
-        <p></p>
-        {% else %}
-        <h5>Block that I currently belong to</h5>
+      {% if user.profile.state %}
+        <h5>Block that I currently belong to:</h5>
         <p class="orange-text darken-2">{{user.profile.state}}</p>
         <div class="divider"></div>
-        {% endif %}
+      {% endif %}
       </div>
     </div>
   </div>

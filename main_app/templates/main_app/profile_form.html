@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  {%if request.user == profile.user %}
+{%if request.user == profile.user %}
 
   <div class="row" height="100%">
     <div class="col s12">
@@ -24,11 +24,14 @@
       </form>
     </div>
   </div>
-  {% endif %}
-  {%if request.user != profile.user %}
-      <h3>You cannot edit this profile</h3>
-      <button>please return to your lane </button>
-  {% endif %}
+{% endif %}
+
+{%if request.user != profile.user %}
+  <h3>You cannot edit this profile</h3>
+  <button>please return to your lane </button>
+{% endif %}
+
+
   <script>
     const dateEl = document.getElementById('id_birth_date');
     M.Datepicker.init(dateEl, {
@@ -38,4 +41,6 @@
     const selectEl = document.getElementById('id_state');
     M.FormSelect.init(selectEl);
    </script>
+
+
 {% endblock %}

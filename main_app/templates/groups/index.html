@@ -2,10 +2,7 @@
 {% block content %}
 
 <h1 class="blocks-title">Your Blocks</h1>
-
-    <div class="center">
-    </div>
-
+    <div class="center"></div>
 {% if groups.count %}
     {% for group in groups %}
     <a href="{% url 'group' group.id %}">
@@ -17,6 +14,5 @@
     </a>
     {% endfor %}
 {% endif %}
-
 
 {% endblock %}
