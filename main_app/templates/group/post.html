@@ -1,20 +1,24 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="card">
+<div class="card ">
         <div  class="card-content">
-            <a class="likes-container right" href="{% url 'like_post' post.group.id post.id %}">
-                <i class="material-icons">thumb_up</i>
-                <div>
-                    {% if post.no_of_likes == 0 %}
+            <div class="row">  
+                <a class="likes-container right offset-s8" href="{% url 'like_post' post.group.id post.id %}">
+                    <i class="material-icons">thumb_up</i>
+                    <div>
+                        {% if post.no_of_likes == 0 %}
                         <p>No Likes</p>
-                    {% elif post.no_of_likes == 1 %}
+                        {% elif post.no_of_likes == 1 %}
                         <p>{{post.no_of_likes}} person liked this post</p>
-                    {% else %}
+                        {% else %}
                         <p>Liked by {{post.no_of_likes}} people</p>
-                    {% endif %}
-                </div>
-            </a>
-            <span class="post-content card-title">{{ post.content }}</span>
+                        {% endif %}
+                    </div>
+                </a>
+            </div>
+            <div class="row">
+                <span class= "post-content card-title">{{ post.content }}</span>
+            </div>
             <p>from {{ post.user }}</p> 
             <p>on {{ post.date }}</p> 
         </div>
@@ -30,25 +34,23 @@
                 <form action="{% url 'add_comment' post.group.id post.id %}" method="POST">
                   {% csrf_token %}
                   {{ comment_form.as_p }}
-                  <input type="submit" class="btn" value="Add Comment">
+                  <input type="submit" class="borderButton black orange-txt darken-2 btn" value="Add Comment">
                 </form>
             </div>
         </div>
 </div>
 {% for comment in post.comment_set.all %}
     <div class="card">
-        <div class="comment-container">
+        {% if user == comment.user %}
+        <div class="row right">
+            <form action="{% url 'remove_comment' post.group.id post.id comment.id%}" method="POST">
+              {% csrf_token %}
+              <input type="submit" class="borderButton black orange-txt darken-2 btn" value="X">
+            </form>
+        </div>
+        {% endif %}
+        <div class="row">
             <span class="comment-content card-title">{{ comment.content }}</span>
-            {% if user == comment.user %}
-            <div>
-                <div class="col s6">
-                    <form action="{% url 'remove_comment' post.group.id post.id comment.id%}" method="POST">
-                      {% csrf_token %}
-                      <input type="submit" class="btn" value="X">
-                    </form>
-                </div>
-            </div>
-            {% endif %}
         </div>
         <p>from {{ comment.user }}</p> 
         <p>on {{ comment.date }}</p> 

@@ -7,17 +7,17 @@
 <a href="{% url 'post_detail' group.id post.id%}">
     <div class="card">
         <div class="card-content">
-            <div>
+            <h5>
                 @{{ post.user }}
-            </div>
-            {{ post.content }}
+            </h5>
+            <p>{{ post.content }}</p>
         </div>
     </div>
 </a>
     {% endfor %}
 {% endif %}
-<button class="button">
-    <a href="{% url 'post_create' group.id %}">
+<button class="borderButton black button">
+    <a href="{% url 'post_create' group.id %}" >
         Create Post
     </a>
 </button>

@@ -4,6 +4,30 @@ body {
   flex-direction: column;
 }
 
+a{
+  color: #f57c00
+}
+
+.card{
+  background-color: #333;
+}
+
+.blockname{
+  margin-top: 120px;
+}
+
+form input, form label{
+  color: white;
+}
+
+form textarea{
+  color: white;
+}
+
+form button{
+  color: gray;
+}
+
 .container{
   min-height: 89vh;
 }
@@ -96,17 +120,15 @@ body {
 .blocks-title, .block-content {  
   animation: 1s ease-out 0s 1 slideInFromLeft;
   
-  background: #333;
+  background: transparent;
   padding: 30px;
 }
 
-.comment-container {
+/* .comment-container {
   display: flex;
   flex-direction: row;
-}
-.comment-container :last-child {
-  margin-left: auto;
-}
+} */
+
 
 .comment-content {
   overflow-wrap: break-word;
@@ -146,5 +168,16 @@ body {
 .navlinks:hover {
   transform: scale(1.1);
   font-weight: bolder;
+}
 
+.datepicker-calendar-container{
+  background-color: black;
+}
+
+.datepicker-date-display{
+  background-color: black;
+}
+
+.borderButton{
+  border: 1px solid #f57c00;
 }
