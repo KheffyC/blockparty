@@ -45,3 +45,43 @@ body {
 .state1 {
   margin: -10px;
 }
+
+.blocks-title {
+  text-align: center;
+  color: white;
+}
+
+.blocks-in {
+  color: white;
+  font-size: 40px;
+  text-align: center;
+}
+
+.block-content {
+  margin: 75px;
+  transition: transform .2s;
+}
+
+.block-content:hover {
+  transform: scale(1.1);
+  background-color: white;
+  color: black;
+  font-weight: bolder;
+
+}
+
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.blocks-title, .block-content {  
+  animation: 1s ease-out 0s 1 slideInFromLeft;
+  
+  background: #333;
+  padding: 30px;
+}
