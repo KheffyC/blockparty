@@ -85,3 +85,13 @@ body {
   background: #333;
   padding: 30px;
 }
+
+.banner {
+  width: 100%;
+  height: 100vh;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0,0,0, 0.70)),url(https://images.pexels.com/photos/274192/pexels-photo-274192.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2);
+  background-size: cover;
+  background-position: center;
+  overflow-y: scroll;
+}
+
