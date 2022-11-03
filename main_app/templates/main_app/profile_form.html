@@ -3,20 +3,69 @@
 {% block content %}
   {%if request.user == profile.user %}
 
+  <div class="row" height="100%">
+    <div class="col s6 offset-s6">
       <h1>Edit <span class="teal-text">Profile</span></h1>
-      <img src="{{ user.profile.profileimg.url }}" width="200px" />
-    <form action="" method="POST" enctype="multipart/form-data">
-      {% csrf_token %}
-      <table class="responsive-table, s6">
-        {{ form.as_p }}
-      </table>
-      <input type="submit" value="Submit!" class="btn">
-    </form>
+    </div>
+  </div>
+  <div class="row" height="100%">
+    <div class="col s12">
+      <img class="circle responsive-img" src="{{ user.profile.profileimg.url }}" width="180px">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col s12">
+      <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table class="responsive-table">
+          {{ form.as_p }}
+        </table>
+        <input type="submit" value="Submit!" class="btn">
+      </form>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
   {% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   {%if request.user != profile.user %}
       <h3>You cannot edit this profile</h3>
       <button>please return to your lane </button>
   {% endif %}
+
+
+
+
+
+
+
+
 
 
   <script>
