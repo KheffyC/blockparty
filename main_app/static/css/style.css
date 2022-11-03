@@ -28,6 +28,10 @@ body {
   font-size: 50px;
 }
 
+.profilehead:hover {
+  text-decoration: underline;
+}
+
 .cardi {
   margin-top: 25px;
   color: white;
