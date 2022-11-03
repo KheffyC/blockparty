@@ -23,13 +23,13 @@
         <a href="#!" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
         <ul class="right hide-on-med-and-down">
           <!-- changes below -->
-            <li> <a href="{% url 'about' %}">About</a></li>
+            <li class="navlinks"> <a href="{% url 'about' %}">About</a></li>
           {% if user.is_authenticated %}
-            <li><a href="{% url 'profiles_index' %}">View Profiles</a></li>
-            <li><a href="{% url 'groups_index' %}">View Blocks</a></li>
-            <li><a href="{% url 'logout' %}">Log Out</a></li>
+            <li class="navlinks"><a href="{% url 'profiles_index' %}">View Profiles</a></li>
+            <li class="navlinks"><a href="{% url 'groups_index' %}">View Blocks</a></li>
+            <li class="navlinks"><a href="{% url 'logout' %}">Log Out</a></li>
             {% if request.user == user.profile.user %}
-              <li>
+              <li class="navlinks">
                 <a href="{% url 'profiles_detail' user.id %}">
                   <img class="circle responsive-img" src="{{ user.profile.profileimg.url }}" 
                   width="70px" alt="" style="margin-top:10px;">
@@ -37,11 +37,11 @@
               </li>
             {% endif %}
           {% else %}
-            <li><a href="{% url 'signup' %}">Sign Up</a></li>
-            <li><a href="{% url 'login' %}">Log In</a></li>
+            <li class="navlinks"><a href="{% url 'signup' %}">Sign Up</a></li>
+            <li class="navlinks"><a href="{% url 'login' %}">Log In</a></li>
           {% endif %}
         </ul>
-  </div>
+     </div>
     </nav>
     <ul class="sidenav" id="mobile-demo">
       <!-- changes below -->
