@@ -91,6 +91,27 @@ body {
   padding: 30px;
 }
 
+.comment-container {
+  display: flex;
+  flex-direction: row;
+}
+.comment-container :last-child {
+  margin-left: auto;
+}
+
+.comment-content {
+  overflow-wrap: break-word;
+}
+
+.likes-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.post-content {
+  overflow-wrap: break-word;
+}
+
 .banner {
   width: 100%;
   height: 100vh;
