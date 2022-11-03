@@ -11,6 +11,7 @@
     <a href="{% url 'post_detail' object.group.id object.id %}">Go Back To Post</a>
   </form>
 {% endif %}
+
 {%if request.user != post.user %}
   <h3>You cannot delete this entry</h3>
 {% endif %}

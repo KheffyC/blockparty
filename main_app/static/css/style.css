@@ -124,12 +124,6 @@ form button{
   padding: 30px;
 }
 
-/* .comment-container {
-  display: flex;
-  flex-direction: row;
-} */
-
-
 .comment-content {
   overflow-wrap: break-word;
 }
