@@ -45,3 +45,8 @@ body {
 .state1 {
   margin: -10px;
 }
+
+#big-title {
+  margin: 0 auto;
+  padding: 0
+}
