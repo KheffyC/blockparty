@@ -17,7 +17,7 @@ Post, reply, and edit all of your own content!
 ## Getting Started
 Click on the link below to get started:
 
-<a href="https://blockparty96.herokuapp.com/" target="_blank">See Deployed Application Here!</a>
+<a href="https://theblockparty.herokuapp.com/" target="_blank">See Deployed Application Here!</a>
 
 
 ## Application Demo
